@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <a class="navbar-brand text-white" href="{% url 'homePage' %}">Portfolio Site</a>
+    <div class="mx-auto d-flex align-items-center">
+
+
+        {% if user.user_type == 'user' %}
+        <a class="btn btn-primary mr-2" href="{% url 'createResume' %}" type="button">Create Resume</a>
+        {% endif %}
+
+
+
+        {% if user.user_type == 'admin' %}
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="addDropdown" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Add
+            </button>
+            <div class="dropdown-menu" aria-labelledby="addDropdown">
+                <a class="dropdown-item" href="{% url 'addEducationPage' %}">Add Education</a>
+                <a class="dropdown-item" href="{% url 'addSkillPage' %}">Add Skills</a>
+                <a class="dropdown-item" href="{% url 'addLanguagePage' %}">Add Language</a>
+                <a class="dropdown-item" href="{% url 'addInterestPage' %}">Add Interest</a>
+            </div>
+        </div>
+
+        <button class="btn btn-primary ml-2" type="button">Manage Resume</button>
+        {% endif %}
+
+
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{user.get_full_name}}
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+
+            {% if user.user_type == 'admin' %}
+            <a class="dropdown-item" href="{% url 'adminProfile' %}">Profile</a>
+            {% endif %}
+
+            {% if user.user_type == 'user' %}
+            <a class="dropdown-item" href="{% url 'viewResume' %}">Profile</a>
+            {% endif %}
+
+            <a class="dropdown-item" href="{% url 'logoutPage' %}">Logout</a>
+        </div>
+    </div>
+</nav>

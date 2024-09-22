@@ -1,0 +1,67 @@
+{% extends 'common/master.html' %}
+
+
+{% block title %}
+
+{% endblock title %}
+
+
+{% block body %}
+
+{% if user.user_type == 'admin' %}
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h1>Profile</h1>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label fw-bold">Admin Name:</label>
+                <div class="col-sm-8">
+                    <p class="form-control-plaintext">{{user.get_full_name}}</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label fw-bold">Email:</label>
+                <div class="col-sm-8">
+                    <p class="form-control-plaintext">{{user.email}}</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label fw-bold">Role:</label>
+                <div class="col-sm-8">
+                    <p class="form-control-plaintext">{{user.user_type | capfirst}}</p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label fw-bold">Last Login:</label>
+                <div class="col-sm-8">
+                    <p class="form-control-plaintext">
+
+                        {% if last_login %}
+                        {{last_login|date:'F j, Y; g:i a'}}
+                        {% endif %}
+
+                    </p>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label fw-bold">Permissions:</label>
+                <div class="col-sm-8">
+                    <p class="form-control-plaintext">Full access to all system settings and user management.</p>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary">Edit Profile</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+
+
+
+{% endblock body %}

@@ -1,0 +1,82 @@
+{% extends 'common/master.html' %}
+
+
+{% block title %}
+<title>Dashboard-{{user.first_name}}{{user.last_name}}</title>
+{% endblock title %}
+
+
+{% block body %}
+<div class="container mt-4">
+    
+    
+    {% if user.user_type == 'admin' %}
+    <h1 class="mb-4 text-center">Admin Dashboard</h1>
+
+    <h1 class="mb-4">Welcome, {{user.first_name}} {{user.last_name}}!</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">User Management</h5>
+                    <p class="card-text">Manage user accounts, roles, and permissions.</p>
+                    <a href="#" class="btn btn-primary">Manage Users</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Recent Activities</h5>
+                    <ul>
+                        <li>User JohnDoe registered.</li>
+                        <li>User JaneSmith updated her profile.</li>
+                        <li>Admin Alice approved a resume.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+        
+
+
+
+
+
+    {% if user.user_type == 'user' %}
+    <h1 class="mb-4">Welcome, {{user.first_name}} {{user.last_name}}!</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Profile</h5>
+                    <p class="card-text">View and update your profile information.</p>
+                    <a href="#" class="btn btn-primary">Go to Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">My Resumes</h5>
+                    <p class="card-text">Manage your resumes and download them as needed.</p>
+                    <a href="#" class="btn btn-primary">Edit Resumes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+</div>
+
+
+
+
+
+{% endblock body %}

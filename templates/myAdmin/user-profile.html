@@ -1,0 +1,79 @@
+{% extends 'common/master.html' %}
+
+
+{% block title %}
+<title>Resume-{{user.get_full_name}}</title>
+{% endblock title %}
+
+
+{% block body %}
+
+
+<div class="container text-center my-5">
+    <!-- Header -->
+    <div class="bg-primary text-white rounded p-4 mb-4">
+        <img src="https://via.placeholder.com/150" alt="John Doe" class="rounded-circle mb-3">
+        <h1>{{user.get_full_name}}</h1>
+        <p>123 Main St, Anytown, USA | (123) 456-7890 | john.doe@email.com | linkedin.com/in/johndoe</p>
+    </div>
+
+    <!-- Experience Section -->
+    <div class="bg-white rounded p-4 shadow mb-4">
+        <h2 class="h4 text-primary">Experience</h2>
+        <h5>Senior Software Developer - Tech Solutions Inc.</h5>
+        <p><em>June 2020 – Present</em></p>
+        <ul class="list-unstyled">
+            <li><strong>• </strong>Led a team of 5 developers to build and maintain web applications.</li>
+            <li><strong>• </strong>Implemented RESTful APIs in Python and JavaScript for seamless integration.</li>
+            <li><strong>• </strong>Optimized application performance, resulting in a 30% increase in efficiency.</li>
+        </ul>
+
+        <h5>Software Developer - Creative Apps Ltd.</h5>
+        <p><em>January 2018 – May 2020</em></p>
+        <ul class="list-unstyled">
+            <li><strong>• </strong>Developed user-friendly web applications using React and Node.js.</li>
+            <li><strong>• </strong>Collaborated with designers to create intuitive interfaces.</li>
+            <li><strong>• </strong>Participated in code reviews to maintain code quality and standards.</li>
+        </ul>
+    </div>
+    <hr>
+
+    <!-- Education Section -->
+    <div class="bg-white rounded p-4 shadow mb-4">
+        <h2 class="h4 text-primary">Education</h2>
+        <h5>Bachelor of Science in Computer Science</h5>
+        <p><em>State University, Anytown, USA - Graduated May 2017</em></p>
+        <p>Relevant Coursework: Data Structures, Web Development, Database Management</p>
+        <p>Honors: Dean's List, Graduated with Honors</p>
+    </div>
+    <hr>
+
+    <!-- Skills Section -->
+    <div class="bg-white rounded p-4 shadow mb-4">
+        <h2 class="h4 text-primary">Skills</h2>
+        <p><strong>Technical Skills:</strong> JavaScript, Python, React, Node.js, SQL</p>
+        <p><strong>Soft Skills:</strong> Team Leadership, Communication, Problem-Solving</p>
+        <p><strong>Tools/Software:</strong> Git, Docker, Visual Studio Code, JIRA</p>
+    </div>
+    <hr>
+
+    <!-- Languages Section -->
+    <div class="bg-white rounded p-4 shadow mb-4">
+        <h2 class="h4 text-primary">Languages</h2>
+        <ul class="list-unstyled">
+            <li>English - Fluent</li>
+            <li>Spanish - Conversational</li>
+            <li>French - Basic</li>
+        </ul>
+    </div>
+    <hr>
+
+    <!-- Certifications Section -->
+    <div class="bg-white rounded p-4 shadow mb-4">
+        <h2 class="h4 text-primary">Certifications</h2>
+        <p>Certified ScrumMaster (CSM), Scrum Alliance — 2022</p>
+        <p>Full Stack Web Development Certification, Codecademy — 2019</p>
+    </div>
+</div>
+
+{% endblock body %}
