@@ -9,12 +9,15 @@
 {% block body %}
 
 
+
 <div class="container text-center my-5">
     <!-- Header -->
     <div class="bg-primary text-white rounded p-4 mb-4">
-        <img src="https://via.placeholder.com/150" alt="John Doe" class="rounded-circle mb-3">
+        <img src="/{{resume.profile_pic}}" alt="{{user.get_full_name}}" class="rounded-circle mb-3"
+            style="height: 150px; width: 150px;">
         <h1>{{user.get_full_name}}</h1>
-        <p>123 Main St, Anytown, USA | (123) 456-7890 | john.doe@email.com | linkedin.com/in/johndoe</p>
+        <p><small> </small></p>
+        <p>{{resume.address}} | {{resume.contact_no}} | {{user.email}} | {{resume.linkedin_url}}</p>
     </div>
 
     <!-- Experience Section -->
@@ -75,5 +78,7 @@
         <p>Full Stack Web Development Certification, Codecademy — 2019</p>
     </div>
 </div>
+
+
 
 {% endblock body %}

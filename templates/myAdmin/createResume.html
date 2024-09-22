@@ -7,5 +7,72 @@
 
 
 {% block body %}
-<h2>Create Resume</h2>
+
+
+<div class="container mt-5 mb-4">
+    <div class="card shadow-lg">
+        <div class="card-header text-center bg-primary text-white">
+            <h2>Create Resume Form</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Profile Picture -->
+                <div class="form-group">
+                    <label for="profile_pic">Profile Picture</label>
+                    <input type="file" class="form-control" id="profile_pic" name="profile_pic" accept="image/*">
+                </div>
+
+                <!-- Designation -->
+                <div class="form-group">
+                    <label for="designation">Designation</label>
+                    <input type="text" class="form-control" id="designation" name="designation" maxlength="100"
+                        required>
+                </div>
+
+                <!-- Career Summary -->
+                <div class="form-group">
+                    <label for="career_summary">Career Summary</label>
+                    <textarea class="form-control" id="career_summary" name="career_summary" maxlength="400" rows="3"
+                        required></textarea>
+                </div>
+
+                <!-- Address -->
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" maxlength="200" required>
+                </div>
+
+                <!-- Contact Number -->
+                <div class="form-group">
+                    <label for="contact_no">Contact Number</label>
+                    <input type="text" class="form-control" id="contact_no" name="contact_no" maxlength="30" required>
+                </div>
+
+                <!-- LinkedIn URL -->
+                <div class="form-group">
+                    <label for="linkedin_url">LinkedIn URL</label>
+                    <input type="url" class="form-control" id="linkedin_url" name="linkedin_url" maxlength="100"
+                        required>
+                </div>
+
+                <!-- Gender -->
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select class="form-control" id="gender" name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 {% endblock body %}

@@ -36,6 +36,7 @@ def registerPage(req):
                 first_name= req.POST.get('firstname'),
                 last_name= req.POST.get('lastname'),
                 user_type = req.POST.get('userType'),
+                email = req.POST.get('email'),
                 password = confirm_password
             )
             user.save()
@@ -101,6 +102,21 @@ def createResume(req):
 
     if user.user_type == 'user':
 
+        if req.method == 'POST':
+            current_user = req.user
+
+            resume = Resume_Model(
+                user = current_user,
+                profile_pic = req.FILES.get('profile_pic'),
+                designation = req.POST.get('designation'),
+                career_summary = req.POST.get('career_summary'),
+                address = req.POST.get('address'),
+                contact_no = req.POST.get('contact_no'),
+                linkedin_url = req.POST.get('linkedin_url'),
+                gender = req.POST.get('gender')
+            )
+            resume.save()
+
         return render(req, 'myAdmin/createResume.html')
 
     else:
@@ -160,4 +176,13 @@ def viewResume(req):
 
     user = req.user
 
-    return render(req, 'myAdmin/user-profile.html')
+    if user.user_type == 'user':
+        
+        resume = get_object_or_404(Resume_Model, user=user)
+        context = {
+            'resume':resume,
+        }
+        return render(req, 'myAdmin/user-profile.html', context)
+    
+    else:
+        return render(req,'myAdmin/error.html')
