@@ -27,7 +27,7 @@ class Resume_Model(models.Model):
         ('other','Other'),
     ]
 
-    profile_pic = models.ImageField(null=True)
+    profile_pic = models.ImageField(upload_to='Media/Profile_Pic', null=True)
     designation = models.CharField(max_length=100, null=True)
     career_summary = models.TextField(max_length=400, null=True)
     address = models.CharField(max_length=200, null=True)
@@ -38,3 +38,15 @@ class Resume_Model(models.Model):
     def __str__(self):
 
         return f"{self.user.username}--{self.designation}"
+
+
+
+class Language_Model(models.Model):
+
+    user = models.ForeignKey(Custom_User, null=True, on_delete=models.CASCADE)
+
+    language_name = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+
+        return f"{self.user.username}--{self.language_name}"

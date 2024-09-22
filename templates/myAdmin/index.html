@@ -8,8 +8,8 @@
 
 {% block body %}
 <div class="container mt-4">
-    
-    
+
+
     {% if user.user_type == 'admin' %}
     <h1 class="mb-4 text-center">Admin Dashboard</h1>
 
@@ -39,7 +39,7 @@
         </div>
     </div>
     {% endif %}
-        
+
 
 
 
@@ -54,7 +54,7 @@
                 <div class="card-body">
                     <h5 class="card-title">My Profile</h5>
                     <p class="card-text">View and update your profile information.</p>
-                    <a href="#" class="btn btn-primary">Go to Profile</a>
+                    <a href="{% url 'viewResume' %}" class="btn btn-primary">Go to Profile</a>
                 </div>
             </div>
         </div>

@@ -18,6 +18,20 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
+
+                <!-- First Name -->
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" value="{{user.first_name}}" name="firstName"
+                        placeholder="Enter your first name..">
+                </div>
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" value="{{user.last_name}}" id="lastName" name="lastName"
+                        placeholder="Enter your last name..">
+                </div>
+
                 <!-- Profile Picture -->
                 <div class="form-group">
                     <label for="profile_pic">Profile Picture</label>

@@ -11,6 +11,23 @@
 
 
 <div class="container text-center my-5">
+
+
+    {% if messages %}
+
+    {% for message in messages %}
+
+    {% if message.tags == 'success' %}
+    <div class="alert alert-success">
+        {{message}}
+    </div>
+    {% endif %}
+
+    {% endfor %}
+
+    {% endif %}
+
+
     <!-- Header -->
     <div class="bg-primary text-white rounded p-4 mb-4">
         <img src="/{{resume.profile_pic}}" alt="{{user.get_full_name}}" class="rounded-circle mb-3"

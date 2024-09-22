@@ -99,24 +99,44 @@ def adminProfile(req):
 def createResume(req):
 
     user = req.user
-
+    current_user = user
     if user.user_type == 'user':
 
         if req.method == 'POST':
-            current_user = req.user
+            
 
-            resume = Resume_Model(
-                user = current_user,
-                profile_pic = req.FILES.get('profile_pic'),
-                designation = req.POST.get('designation'),
-                career_summary = req.POST.get('career_summary'),
-                address = req.POST.get('address'),
-                contact_no = req.POST.get('contact_no'),
-                linkedin_url = req.POST.get('linkedin_url'),
-                gender = req.POST.get('gender')
-            )
+            # resume = Resume_Model(
+            #     user = current_user,
+            #     profile_pic = req.FILES.get('profile_pic'),
+            #     designation = req.POST.get('designation'),
+            #     career_summary = req.POST.get('career_summary'),
+            #     address = req.POST.get('address'),
+            #     contact_no = req.POST.get('contact_no'),
+            #     linkedin_url = req.POST.get('linkedin_url'),
+            #     gender = req.POST.get('gender')
+            # )
+
+            # another way
+
+            resume, created = Resume_Model.objects.get_or_create(user=current_user)
+                
+            resume.profile_pic = req.FILES.get('profile_pic')
+            resume.designation = req.POST.get('designation')
+            resume.career_summary = req.POST.get('career_summary')
+            resume.address = req.POST.get('address')
+            resume.contact_no = req.POST.get('contact_no')
+            resume.linkedin_url = req.POST.get('linkedin_url')
+            resume.gender = req.POST.get('gender')
+            
+
             resume.save()
 
+            current_user.first_name = req.POST.get('firstName')
+            current_user.last_name = req.POST.get('lastName')
+
+            current_user.save() 
+            messages.success(req, 'Resume successfully created!')
+            return redirect('viewResume')
         return render(req, 'myAdmin/createResume.html')
 
     else:
@@ -177,8 +197,8 @@ def viewResume(req):
     user = req.user
 
     if user.user_type == 'user':
-        
-        resume = get_object_or_404(Resume_Model, user=user)
+        current_user = user
+        resume = get_object_or_404(Resume_Model, user=current_user)
         context = {
             'resume':resume,
         }
