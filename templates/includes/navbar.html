@@ -42,6 +42,10 @@
 
             {% if user.user_type == 'user' %}
             <a class="dropdown-item" href="{% url 'viewResume' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'addEducationPage' %}">Add Education</a>
+            <a class="dropdown-item" href="{% url 'addSkillPage' %}">Add Skills</a>
+            <a class="dropdown-item" href="{% url 'addLanguagePage' %}">Add Language</a>
+            <a class="dropdown-item" href="{% url 'addInterestPage' %}">Add Interest</a>
             {% endif %}
 
             <a class="dropdown-item" href="{% url 'logoutPage' %}">Logout</a>

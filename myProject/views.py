@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 
 from django.contrib.auth import authenticate, login, logout
@@ -10,6 +10,8 @@ from django.contrib import messages
 
 from django.utils import timezone
 from pytz import timezone as pytz_timezone
+
+from django.db.utils import IntegrityError
 
 
 @login_required
@@ -137,6 +139,7 @@ def createResume(req):
             current_user.save() 
             messages.success(req, 'Resume successfully created!')
             return redirect('viewResume')
+        
         return render(req, 'myAdmin/createResume.html')
 
     else:
@@ -147,9 +150,32 @@ def createResume(req):
 @login_required    
 def addEducationPage(req):
 
-    user = req.user
+    current_user = req.user
+    
+    if req.user.user_type == "user":
+        
+        if req.method == 'POST':
+            
+            study_level = req.POST.get('educationLevel')
+            educational_institute = req.POST.get('institute')
+            passing_year = req.POST.get('passingYear')
+            
 
-    if user.user_type == "admin":
+            if Education_Model.objects.filter(user=current_user, study_level = study_level).exists():
+                messages.warning(req, 'Education level is already exists!')
+                return redirect('addEducationPage')
+            
+            education = Education_Model(
+                user=current_user,
+                study_level = study_level,
+                educational_institute = educational_institute,
+                passing_year = passing_year
+            )
+            
+            education.save()
+            
+            messages.success(req, 'Educational Data Successfully Saved!')
+            return redirect('viewResume')
 
         return render(req,'myAdmin/addEducation.html')
     
@@ -158,34 +184,90 @@ def addEducationPage(req):
 
 
 @login_required    
-def addSkillPage(req):
+def addSkillPage(request):
 
-    user = req.user
+    if request.user.user_type == "user":
 
-    if user.user_type == "admin":
+        skills = SkillName.objects.all()
+        skill_proficiency = Skill_Proficiency.objects.all()
 
-        return render(req,'myAdmin/addSkill.html')
+        print("Can access!")
+        context = {
+            'skills':skills,
+            'proficiency':skill_proficiency,
+        }
+
+        if request.method == 'POST':
+            print("Can access!")
+
+            skill_id = request.POST.get('skill_name')
+            proficiency_id = request.POST.get('proficiencyLevel')
+
+            skill_obj = SkillName.objects.get( id = skill_id)
+            proficiency_obj = Skill_Proficiency.objects.get(id = proficiency_id)
+            
+            current_user = request.user
+
+            skills_model_instance = SkillName(
+                user = current_user,
+                skill_name = skill_obj,
+                proficiency = proficiency_obj
+            )
+
+            print("Can access! save!")
+        
+            skills_model_instance.save()
+
+            return redirect('viewResume')
+        
+        return render(request,'myAdmin/addSkill.html', context)
     
     else:
-        return render(req, 'myAdmin/error.html')
+        return render(request, 'myAdmin/error.html')
 
+    
+    
 
 @login_required
 def addLanguagePage(req):
 
-    user = req.user
+    current_user = req.user
 
-    if user.user_type =='admin':
+    if req.user.user_type =='user':
 
-        return render(req,'myAdmin/addLanguage.html')
+        language = LanguageName.objects.all()
+
+
+        if req.method == 'POST':
+
+            language_name_id = req.POST.get('language_name')
+            proficiency = req.POST.get('proficiency')
+
+            language_name_obj = LanguageName.objects.get(id=language_name_id)
+
+            language_info = Language_Model(
+                user = current_user,
+                language_name = language_name_obj,
+                proficiency = proficiency, 
+            )
+            language_info.save()
+            return redirect('viewResume')    
+
+        context = {
+            'language_name':language,
+        }
+
+        return render(req, 'myAdmin/addLanguage.html', context)
+    
     else:
         return render(req,'myAdmin/error.html')
     
+
 def addInterestPage(req):
     
     user = req.user
 
-    if user.user_type == 'admin':
+    if user.user_type == 'user':
         return render(req, 'myAdmin/addInterest.html')
     else:
         return render(req,'myAdmin/error.html')
@@ -198,9 +280,26 @@ def viewResume(req):
 
     if user.user_type == 'user':
         current_user = user
-        resume = get_object_or_404(Resume_Model, user=current_user)
+    
+
+        try:
+            resume = get_object_or_404(Resume_Model, user=current_user)
+        
+        except Http404:
+            messages.warning(req,"You don't have a resume yet. Please create one.")
+            return redirect('createResume')
+
+
+        education =Education_Model.objects.filter(user=current_user)
+        language = Language_Model.objects.filter(user=current_user)
+        skills = Skill_Model.objects.filter(user=current_user)
+
+
         context = {
             'resume':resume,
+            'education': education,
+            'language': language,
+            'skills': skills, 
         }
         return render(req, 'myAdmin/user-profile.html', context)
     

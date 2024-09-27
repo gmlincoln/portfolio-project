@@ -8,4 +8,33 @@
 
 {% block body %}
 
+<div class="container mt-5">
+    <h2>Add Language Proficiency</h2>
+    <form method="POST" class="mt-4">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="language_name">Language:</label>
+            <select name="language_name" id="language_name" class="form-control">
+                <option value="" aria-readonly="true">Select Language...</option>
+                <!-- Dynamically add options for languages here -->
+                {% for l in language_name %}
+                <option value="{{l.id}}">{{l.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="proficiency">Proficiency Level:</label>
+            <select name="proficiency" id="proficiency" class="form-control">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+                <option value="fluent">Fluent</option>
+                <option value="native">Native</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Language</button>
+    </form>
+</div>
+
+
 {% endblock body %}

@@ -7,5 +7,69 @@
 
 
 {% block body %}
-<h2>Add Education</h2>
+
+
+<div class="container">
+    <div class="row justify-content-center" style="min-height: 100vh;">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h5>Select Your Education Level</h5>
+                </div>
+
+                {% include 'includes/messages.html' %}
+
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="educationLevel">Education Level:</label>
+                            <select id="educationLevel" name="educationLevel" class="form-control"
+                                onchange="toggleFields()" required>
+                                <option aria-readonly="true">Select...</option>
+                                <option value="ssc">SSC</option>
+                                <option value="hsc">HSC</option>
+                                <option value="bsc">BSc</option>
+
+                                <option value="msc">MSc</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+
+                        <div id="instituteField" class="form-group">
+                            <label for="institute">Educational Institute:</label>
+                            <input type="text" id="institute" name="institute" class="form-control"
+                                placeholder="Enter your educational institute" required>
+                        </div>
+
+                        <div id="passingYearField" class="form-group">
+                            <label for="passingYear">Passing Year:</label>
+                            <input type="number" id="passingYear" name="passingYear" class="form-control"
+                                placeholder="Enter your passing year" min="1900" max="2024" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleFields() {
+        const educationLevel = document.getElementById('educationLevel').value;
+        const instituteField = document.getElementById('instituteField');
+        const passingYearField = document.getElementById('passingYearField');
+
+        if (educationLevel) {
+            instituteField.style.display = 'block';
+            passingYearField.style.display = 'block';
+        } else {
+            instituteField.style.display = 'none';
+            passingYearField.style.display = 'none';
+        }
+    }
+</script>
+
 {% endblock body %}

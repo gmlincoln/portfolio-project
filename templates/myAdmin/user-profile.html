@@ -13,27 +13,16 @@
 <div class="container text-center my-5">
 
 
-    {% if messages %}
-
-    {% for message in messages %}
-
-    {% if message.tags == 'success' %}
-    <div class="alert alert-success">
-        {{message}}
-    </div>
-    {% endif %}
-
-    {% endfor %}
-
-    {% endif %}
+    {% include 'includes/messages.html' %}
 
 
+    {% if resume %}
     <!-- Header -->
     <div class="bg-primary text-white rounded p-4 mb-4">
         <img src="/{{resume.profile_pic}}" alt="{{user.get_full_name}}" class="rounded-circle mb-3"
             style="height: 150px; width: 150px;">
         <h1>{{user.get_full_name}}</h1>
-        <p><small> </small></p>
+        <p>{{resume.designation}}</p>
         <p>{{resume.address}} | {{resume.contact_no}} | {{user.email}} | {{resume.linkedin_url}}</p>
     </div>
 
@@ -61,30 +50,74 @@
     <!-- Education Section -->
     <div class="bg-white rounded p-4 shadow mb-4">
         <h2 class="h4 text-primary">Education</h2>
-        <h5>Bachelor of Science in Computer Science</h5>
-        <p><em>State University, Anytown, USA - Graduated May 2017</em></p>
-        <p>Relevant Coursework: Data Structures, Web Development, Database Management</p>
-        <p>Honors: Dean's List, Graduated with Honors</p>
+
+
+        {% if education %}
+
+        {% for e in education %}
+        <h5>{{e.study_level | upper}}</h5>
+        <p><em>{{e.educational_institute}} - Graduated {{e.passing_year}}</em></p>
+        {% endfor %}
+
+        {% else %}
+        <div class="alert alert-primary">
+            <p>Education is not added yet!</p>
+        </div>
+        <a class="btn btn-primary" href="{% url 'addEducationPage' %}">Add Education</a>
+
+        {% endif %}
+
+
+
+
     </div>
     <hr>
 
     <!-- Skills Section -->
     <div class="bg-white rounded p-4 shadow mb-4">
         <h2 class="h4 text-primary">Skills</h2>
-        <p><strong>Technical Skills:</strong> JavaScript, Python, React, Node.js, SQL</p>
-        <p><strong>Soft Skills:</strong> Team Leadership, Communication, Problem-Solving</p>
-        <p><strong>Tools/Software:</strong> Git, Docker, Visual Studio Code, JIRA</p>
+
+
+        {% if skills %}
+
+        {% for s in skills %}
+        <p><strong>{{s.skill_name}}--</strong>{{s.proficiency}}</p>
+        {% endfor %}
+
+        {% else %}
+
+        <div class="alert alert-warning">
+            <p>Skills not added yet!</p>
+        </div>
+
+        {% endif %}
+
+
+
+
+
     </div>
     <hr>
 
     <!-- Languages Section -->
     <div class="bg-white rounded p-4 shadow mb-4">
         <h2 class="h4 text-primary">Languages</h2>
+
+        {% if language %}
         <ul class="list-unstyled">
-            <li>English - Fluent</li>
-            <li>Spanish - Conversational</li>
-            <li>French - Basic</li>
+
+            {% for l in language %}
+            <li>{{l.language_name}}-{{l.proficiency | capfirst}} </li>
+            {% endfor %}
+
         </ul>
+        {% else %}
+        <div class="alert alert-warning">
+            <p>Language not added yet!</p>
+        </div>
+        <a class="btn btn-primary" href="{% url 'addLanguagePage' %}">Add Language</a>
+        {% endif %}
+
     </div>
     <hr>
 
@@ -94,6 +127,7 @@
         <p>Certified ScrumMaster (CSM), Scrum Alliance — 2022</p>
         <p>Full Stack Web Development Certification, Codecademy — 2019</p>
     </div>
+    {% endif %}
 </div>
 
 

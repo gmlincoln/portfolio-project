@@ -7,5 +7,39 @@
 
 
 {% block body %}
-<h2>Add Skill Page</h2>
+
+<div class="container mt-5">
+    <h2>Skill Proficiency Form</h2>
+    <form method="POST" action="{% url 'addSkillPage' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="skillSelect">Select Skill</label>
+            <select class="form-control" name="skill_name" id="skillSelect" required>
+                <option value="" disabled selected>Select a skill</option>
+
+                {% for s in skills %}
+                <option value="{{s.id}}">{{s.name}}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="proficiencyLevel">Proficiency Level</label>
+            <select class="form-control" id="proficiencyLevel" name="proficiencyLevel" required>
+                <option value="" disabled selected>Select proficiency level</option>
+
+                {% for p in proficiency %}
+                <option value="{{p.id}}">{{p.proficiency_level | capfirst}}</option>
+
+                {% endfor %}
+
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+
+
 {% endblock body %}
